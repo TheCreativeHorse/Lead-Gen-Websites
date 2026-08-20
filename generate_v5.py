@@ -122,6 +122,9 @@ for lead in LEADS:
     for i, cap in enumerate(lead["gallery_captions"], start=1):
         tokens[f"{{{{GALLERY_IMG_{i}}}}}"] = photos[i-1]
         tokens[f"{{{{GALLERY_CAPTION_{i}}}}}"] = cap
+    for i, (q, a) in enumerate(lead["faqs"], start=1):
+        tokens[f"{{{{FAQ_{i}_Q}}}}"] = q
+        tokens[f"{{{{FAQ_{i}_A}}}}"] = a
 
     # YEARS_LABEL may itself contain {{CITY}} - resolve CITY first, then substitute label
     years_label_resolved = years_label.replace("{{CITY}}", lead["city"])

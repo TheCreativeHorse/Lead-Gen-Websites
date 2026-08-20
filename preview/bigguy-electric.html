@@ -43,11 +43,10 @@
   img{max-width:100%;display:block;}
   .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
   .reveal{opacity:0;transform:translateY(24px);}
-  .gallery figure{opacity:0;transform:translateY(16px);}
   @media (prefers-reduced-motion: reduce){
-    .reveal,.gallery figure{opacity:1!important;transform:none!important;}
+    .reveal{opacity:1!important;transform:none!important;}
   }
-  .no-motion .reveal,.no-motion .gallery figure{opacity:1;transform:none;}
+  .no-motion .reveal{opacity:1;transform:none;}
 
   /* ---------- icons: monochrome stroke, no color fill ---------- */
   .icon{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
@@ -214,25 +213,45 @@
   .compare .tag.before{left:16px;background:rgba(0,0,0,.55);}
   .compare .tag.after{right:16px;background:rgba(0,0,0,.55);}
 
-  /* ---------- photo gallery: lead banner + 3-up row, always fills exactly (no empty cells) ---------- */
-  .gallery{display:grid;grid-template-columns:repeat(2,1fr);grid-auto-rows:180px;gap:12px;}
-  @media (min-width:700px){
-    .gallery{grid-template-columns:repeat(3,1fr);grid-template-rows:280px 200px;gap:14px;}
-    .gallery figure:first-child{grid-column:1/-1;}
+  /* ---------- photo gallery: one photo at a time, auto-advancing slider ---------- */
+  .slider{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:16/9;background:var(--paper-soft);box-shadow:0 24px 50px -20px rgba(0,0,0,.2);}
+  .slider-track{display:flex;height:100%;transition:transform .6s cubic-bezier(.22,1,.36,1);}
+  .slide{position:relative;flex:0 0 100%;height:100%;cursor:zoom-in;}
+  .slide img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
+  .slide figcaption{
+    position:absolute;left:0;right:0;bottom:0;padding:22px 26px;font-size:14px;font-weight:600;color:#fff;
+    background:linear-gradient(180deg,transparent,rgba(0,0,0,.72));
   }
-  .gallery figure{
-    position:relative;border-radius:14px;overflow:hidden;background:var(--paper-soft);cursor:zoom-in;
+  .slider-arrow{
+    position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;
+    background:rgba(255,255,255,.92);border:none;color:var(--ink);font-size:22px;font-weight:800;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;z-index:3;
   }
-  .gallery img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .5s ease;}
-  .gallery figure:hover img{transform:scale(1.05);}
-  .gallery figcaption{
-    position:absolute;left:0;right:0;bottom:0;padding:14px;font-size:13px;font-weight:600;color:#fff;
-    background:linear-gradient(180deg,transparent,rgba(0,0,0,.7));
-    opacity:0;transition:opacity .3s;z-index:2;
-  }
-  .gallery figure:hover figcaption{opacity:1;}
+  .slider-arrow:hover{background:#fff;}
+  .slider-arrow.prev{left:16px;}
+  .slider-arrow.next{right:16px;}
+  .slider-dots{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:3;}
+  .slider-dots button{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.5);border:none;padding:0;cursor:pointer;transition:background .2s,width .2s;}
+  .slider-dots button.active{background:#fff;width:22px;border-radius:4px;}
+  @media (max-width:699px){.slider{aspect-ratio:4/3;}}
 
-  /* ---------- lightbox: click any gallery photo to see it full-size ---------- */
+  /* ---------- FAQ: plain accordion, native <details>, small accent stripe only ---------- */
+  .faq-list{max-width:760px;margin:0 auto;display:grid;gap:14px;}
+  .faq-item{background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--brand-accent);border-radius:12px;padding:2px 22px;}
+  .faq-item summary{
+    list-style:none;cursor:pointer;padding:18px 0;font-weight:700;font-size:15.5px;color:var(--ink);
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item .faq-icon{
+    flex:none;width:24px;height:24px;border-radius:50%;background:var(--paper-soft);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:var(--ink-soft);
+    transition:transform .2s;
+  }
+  .faq-item[open] .faq-icon{transform:rotate(45deg);}
+  .faq-item p{padding:0 0 20px;color:var(--ink-soft);font-size:14.5px;line-height:1.65;}
+
+  /* ---------- lightbox: click the current photo to see it full-size ---------- */
   .lightbox{
     position:fixed;inset:0;z-index:999;background:rgba(4,5,8,.94);
     display:none;align-items:center;justify-content:center;padding:32px;cursor:zoom-out;
@@ -347,7 +366,7 @@
     border:1px solid color-mix(in srgb, var(--brand-accent) 40%, transparent);
     padding:12px 14px;border-radius:10px;font-size:13px;font-weight:600;margin-top:14px;
   }
-  a,button,.service-card,.gallery figure{cursor:pointer;}
+  a,button,.service-card,.slide{cursor:pointer;}
 </style>
 </head>
 <body>
@@ -368,6 +387,7 @@
         <a href="#services">Services</a>
         <a href="#work">Our Work</a>
         <a href="#reviews">Reviews</a>
+        <a href="#faq">FAQ</a>
         <a href="#contact">Contact</a>
       </nav>
       <a class="header-cta" href="tel:9058678017">905-867-8017</a>
@@ -459,16 +479,48 @@
         <span class="eyebrow">Recent work</span>
         <h2>Real jobs, real Brampton homes</h2>
       </div>
-      <div class="gallery reveal">
-        <figure><img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWldl_HFGYWmLiTvM-JI5AVjtRGA_8rzJ2g-_WWjCSLqu1zr767D1SW2aO0FAWgkcMxOYLDNwA0XmG4He30UxVMzD_uTYFGz7UUcURdfWQOFlQyNyar9NOlfWKNlIl82FqFotfU=w1920-h1080-k-no" alt="Recent job 1"><figcaption>Outlet & switch repair, Brampton</figcaption></figure>
-        <figure><img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWngqLB9fkF2Bik8xuJMPtc2BZcsO7FG5MCNjRXihvYUhhD6TcctWpRfz2k5tzCbLj7iMyoeevgEJ7wFsrQRhfp4VUxkZ5B6WJuj8z0FOuRzdBokBcAsoEUssG0SLaofD4YgHqx6=w1920-h1080-k-no" alt="Recent job 2"><figcaption>Emergency call, Boxing Day</figcaption></figure>
-        <figure><img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlVDu07joRwRsCYT8Ns6De2U-_wxtlgEi4P5MewswXlUmrNiZGOB_11_dVz0_ZOjOlETvE6Yr3Er-0cgcxWw2Epu3i3kDmIwAkHht_oqpqjboHgp0-iaK9sarEYCPSdBeyZNBIs=w1920-h1080-k-no" alt="Recent job 3"><figcaption>Residential electrical, GTA</figcaption></figure>
-        <figure><img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmwLGPO2YozTNQr255GDsU1T9FTd-YfaB8YefAkpTSYTClsh8mYBfJf3TxI20z15C1uQHmCAc7iyipk6MmcJcLG_kY5VTSlmGeMircpFr_KyJbLBuc_pLPeRZ9flpunC3EGyeVz=w1920-h1080-k-no" alt="Recent job 4"><figcaption>On-site diagnostics</figcaption></figure>
+      <div class="slider reveal" id="gallerySlider">
+        <div class="slider-track" id="sliderTrack">
+          <figure class="slide"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWldl_HFGYWmLiTvM-JI5AVjtRGA_8rzJ2g-_WWjCSLqu1zr767D1SW2aO0FAWgkcMxOYLDNwA0XmG4He30UxVMzD_uTYFGz7UUcURdfWQOFlQyNyar9NOlfWKNlIl82FqFotfU=w1920-h1080-k-no" alt="Recent job 1"><figcaption>Outlet & switch repair, Brampton</figcaption></figure>
+          <figure class="slide"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWngqLB9fkF2Bik8xuJMPtc2BZcsO7FG5MCNjRXihvYUhhD6TcctWpRfz2k5tzCbLj7iMyoeevgEJ7wFsrQRhfp4VUxkZ5B6WJuj8z0FOuRzdBokBcAsoEUssG0SLaofD4YgHqx6=w1920-h1080-k-no" alt="Recent job 2"><figcaption>Emergency call, Boxing Day</figcaption></figure>
+          <figure class="slide"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlVDu07joRwRsCYT8Ns6De2U-_wxtlgEi4P5MewswXlUmrNiZGOB_11_dVz0_ZOjOlETvE6Yr3Er-0cgcxWw2Epu3i3kDmIwAkHht_oqpqjboHgp0-iaK9sarEYCPSdBeyZNBIs=w1920-h1080-k-no" alt="Recent job 3"><figcaption>Residential electrical, GTA</figcaption></figure>
+          <figure class="slide"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmwLGPO2YozTNQr255GDsU1T9FTd-YfaB8YefAkpTSYTClsh8mYBfJf3TxI20z15C1uQHmCAc7iyipk6MmcJcLG_kY5VTSlmGeMircpFr_KyJbLBuc_pLPeRZ9flpunC3EGyeVz=w1920-h1080-k-no" alt="Recent job 4"><figcaption>On-site diagnostics</figcaption></figure>
+        </div>
+        <button class="slider-arrow prev" type="button" id="sliderPrev" aria-label="Previous photo">&#8249;</button>
+        <button class="slider-arrow next" type="button" id="sliderNext" aria-label="Next photo">&#8250;</button>
+        <div class="slider-dots" id="sliderDots"></div>
       </div>
     </div>
     <div class="lightbox" id="lightbox" aria-hidden="true">
       <button class="lightbox-close" type="button" aria-label="Close">&times;</button>
       <img src="" alt="">
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">FAQ</span>
+        <h2>Questions people ask before calling</h2>
+      </div>
+      <div class="faq-list reveal">
+        <details class="faq-item" open>
+          <summary>Do you offer 24-hour emergency service?<span class="faq-icon">+</span></summary>
+          <p>Yes — BigGuy Electric provides 24-hour emergency electrical service, including holidays and weekends.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What areas do you serve?<span class="faq-icon">+</span></summary>
+          <p>We serve Brampton and the surrounding GTA for commercial, industrial, and residential electrical work.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do you provide free estimates?<span class="faq-icon">+</span></summary>
+          <p>Yes, we provide a straight quote before any work begins, no pressure.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How long has BigGuy Electric been in business?<span class="faq-icon">+</span></summary>
+          <p>BigGuy Electric has served commercial, industrial, and residential clients across Brampton and the GTA since 2018.</p>
+        </details>
+      </div>
     </div>
   </section>
 
@@ -565,7 +617,7 @@
     const { animate, inView, stagger, hover, press } = Motion;
     const easeOut = [.22,1,.36,1];
 
-    const groups = [['.services-grid','.service-card'], ['.gallery','figure'], ['.why-grid','.why-item']];
+    const groups = [['.services-grid','.service-card'], ['.why-grid','.why-item']];
     const groupedEls = new Set();
     groups.forEach(([groupSel, itemSel])=>{
       document.querySelectorAll(groupSel).forEach(group=>{
@@ -578,7 +630,7 @@
     });
 
     document.querySelectorAll('.reveal').forEach(el=>{
-      if (groupedEls.has(el) || el.matches('.services-grid, .gallery, .why-grid')) return;
+      if (groupedEls.has(el) || el.matches('.services-grid, .why-grid')) return;
       inView(el, ()=>{
         animate(el, {opacity:[0,1], y:[24,0]}, {duration:.7, easing:easeOut});
       }, {margin:'0px 0px -10% 0px'});
@@ -587,7 +639,7 @@
     animate(['.hero-badge','.hero h1','.hero p','.hero-actions'],
       {opacity:[0,1], y:[16,0]}, {delay:stagger(.12), duration:.8, easing:easeOut});
 
-    hover('.service-card, .gallery figure', (el)=>{
+    hover('.service-card', (el)=>{
       animate(el, {scale:1.012}, {type:'spring', stiffness:300, damping:22});
       return ()=>animate(el, {scale:1}, {type:'spring', stiffness:300, damping:22});
     });
@@ -625,11 +677,11 @@
     document.getElementById('qf-success').style.display = 'block';
   });
 
-  // gallery lightbox — click any photo to see it full-size
+  // gallery lightbox — click the current slide to see it full-size
   const lightbox = document.getElementById('lightbox');
   if (lightbox) {
     const lbImg = lightbox.querySelector('img');
-    document.querySelectorAll('.gallery figure').forEach((fig) => {
+    document.querySelectorAll('.slide').forEach((fig) => {
       fig.addEventListener('click', () => {
         const img = fig.querySelector('img');
         if (!img) return;
@@ -648,6 +700,38 @@
     lightbox.querySelector('.lightbox-close').addEventListener('click', (e) => { e.stopPropagation(); closeLightbox(); });
     lbImg.addEventListener('click', (e) => e.stopPropagation());
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+  }
+
+  // gallery slider — auto-advance, arrows, dots, pause on hover
+  const gallerySlider = document.getElementById('gallerySlider');
+  if (gallerySlider) {
+    const track = document.getElementById('sliderTrack');
+    const slides = Array.from(track.children);
+    const dotsWrap = document.getElementById('sliderDots');
+    let idx = 0, timer;
+    slides.forEach((_, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', `Go to photo ${i + 1}`);
+      if (i === 0) b.classList.add('active');
+      b.addEventListener('click', () => { go(i); resetTimer(); });
+      dotsWrap.appendChild(b);
+    });
+    const dots = Array.from(dotsWrap.children);
+    function go(i) {
+      idx = (i + slides.length) % slides.length;
+      track.style.transform = `translateX(-${idx * 100}%)`;
+      dots.forEach((d, n) => d.classList.toggle('active', n === idx));
+    }
+    function resetTimer() {
+      clearInterval(timer);
+      timer = setInterval(() => go(idx + 1), 4500);
+    }
+    document.getElementById('sliderPrev').addEventListener('click', () => { go(idx - 1); resetTimer(); });
+    document.getElementById('sliderNext').addEventListener('click', () => { go(idx + 1); resetTimer(); });
+    resetTimer();
+    gallerySlider.addEventListener('mouseenter', () => clearInterval(timer));
+    gallerySlider.addEventListener('mouseleave', resetTimer);
   }
 </script>
 </body>
