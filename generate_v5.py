@@ -20,6 +20,10 @@ with open("/tmp/gen/assets/before_b64.txt") as _f:
 with open("/tmp/gen/assets/after_b64.txt") as _f:
     AFTER_PHOTO = _f.read().strip()
 
+# ---------- shared hero banner background (common across all 9 sites, replaces per-business hero photo) ----------
+with open("/tmp/gen/assets/hero_banner_b64.txt") as _f:
+    HERO_BANNER = _f.read().strip()
+
 GALLERY_ICONS = ["panel", "bulb", "tools", "van"]
 
 def gallery_icon(kind, primary, accent, caption):
@@ -100,7 +104,7 @@ for lead in LEADS:
         "{{YEARS_IN_BUSINESS}}": lead["years"],
         "{{LOGO_INITIALS}}": lead["logo"],
         "{{HERO_HEADLINE}}": lead["hero_headline"],
-        "{{HERO_IMAGE}}": lead.get("hero_image") or photos[0],
+        "{{HERO_IMAGE}}": HERO_BANNER,
         "{{TAGLINE}}": lead["tagline"],
         "{{ABOUT_TEXT}}": lead["about"] + " " + lead["hook"],
         "{{YEAR}}": "2026",
