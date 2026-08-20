@@ -616,6 +616,27 @@
 
 <script src="https://cdn.jsdelivr.net/npm/motion@13.1.0/dist/motion.js"></script>
 <script>
+  // on-page debug log — only active with ?debug=1 in the URL, invisible otherwise, for diagnosing touch issues on real phones without remote devtools
+  const DEBUG_MODE = /[?&]debug=1/.test(location.search);
+  let dbgPanel = null;
+  function dbg(msg){
+    if (!DEBUG_MODE) return;
+    if (!dbgPanel){
+      dbgPanel = document.createElement('div');
+      dbgPanel.style.cssText = 'position:fixed;left:0;right:0;bottom:0;max-height:45vh;overflow:auto;background:rgba(0,0,0,.92);color:#0f0;font:11px/1.4 monospace;padding:8px;z-index:99999;white-space:pre-wrap;';
+      document.body.appendChild(dbgPanel);
+    }
+    const line = document.createElement('div');
+    line.textContent = new Date().toISOString().slice(11,23) + '  ' + msg;
+    dbgPanel.appendChild(line);
+    dbgPanel.scrollTop = dbgPanel.scrollHeight;
+    while (dbgPanel.children.length > 60) dbgPanel.removeChild(dbgPanel.firstChild);
+  }
+  if (DEBUG_MODE){
+    window.addEventListener('error', (e) => dbg('JS ERROR: ' + e.message + ' @ ' + e.filename + ':' + e.lineno));
+    dbg('debug mode on. touchpoints=' + navigator.maxTouchPoints + ' ua=' + navigator.userAgent.slice(0,60));
+  }
+
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (typeof Motion === 'undefined' || reduceMotion) {
     document.documentElement.classList.add('no-motion');
@@ -659,6 +680,7 @@
   const slider = document.getElementById('compareSlider');
   const afterWrap = document.getElementById('afterWrap');
   const handle = document.getElementById('handle');
+  dbg('compareSlider found=' + !!slider + ' afterWrap=' + !!afterWrap + ' handle=' + !!handle);
   if (slider && afterWrap && handle) {
     let dragging = false;
     let pendingX = null;
@@ -670,25 +692,28 @@
       const pct = Math.min(100, Math.max(0, ((pendingX - r.left) / r.width) * 100));
       afterWrap.style.clipPath = `inset(0 0 0 ${pct}%)`;
       handle.style.left = pct + '%';
+      dbg('compare applyPos pct=' + pct.toFixed(1));
     }
     function queuePos(x){
       pendingX = x;
       if (rafId === null) rafId = requestAnimationFrame(applyPos);
     }
-    function startDrag(x){ dragging = true; queuePos(x); }
+    function startDrag(x){ dragging = true; dbg('compare startDrag x=' + x); queuePos(x); }
     function moveDrag(x){ if (dragging) queuePos(x); }
-    function endDrag(){ dragging = false; }
+    function endDrag(){ dbg('compare endDrag'); dragging = false; }
 
     slider.addEventListener('mousedown', (e)=>startDrag(e.clientX));
     window.addEventListener('mousemove', (e)=>moveDrag(e.clientX));
     window.addEventListener('mouseup', endDrag);
 
     slider.addEventListener('touchstart', (e)=>{
+      dbg('compare touchstart, touches=' + (e.touches ? e.touches.length : 'null'));
       if (!e.touches || !e.touches.length) return;
       startDrag(e.touches[0].clientX);
     }, {passive:true});
     slider.addEventListener('touchmove', (e)=>{
-      if (!dragging || !e.touches || !e.touches.length) return;
+      if (!dragging || !e.touches || !e.touches.length) { dbg('compare touchmove ignored, dragging=' + dragging); return; }
+      dbg('compare touchmove x=' + e.touches[0].clientX + ' cancelable=' + e.cancelable);
       if (e.cancelable) e.preventDefault();
       moveDrag(e.touches[0].clientX);
     }, {passive:false});
@@ -740,6 +765,7 @@
 
   // gallery slider — auto-advance, arrows, dots, pause on hover
   const gallerySlider = document.getElementById('gallerySlider');
+  dbg('gallerySlider found=' + !!gallerySlider);
   if (gallerySlider) {
     const track = document.getElementById('sliderTrack');
     const slides = Array.from(track.children);
@@ -776,6 +802,7 @@
       track.style.transform = `translateX(calc(-${idx * 100}% + ${pct}%))`;
     }
     gallerySlider.addEventListener('touchstart', (e) => {
+      dbg('gallery touchstart, touches=' + (e.touches ? e.touches.length : 'null') + ' target=' + (e.target && e.target.tagName));
       if (!e.touches || !e.touches.length) return;
       touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
@@ -787,19 +814,22 @@
       track.style.transition = 'none';
     }, {passive:true});
     gallerySlider.addEventListener('touchmove', (e) => {
-      if (!touchActive || !e.touches || !e.touches.length) return;
+      if (!touchActive || !e.touches || !e.touches.length) { dbg('gallery touchmove ignored, active=' + touchActive); return; }
       const dx = e.touches[0].clientX - touchStartX;
       const dy = e.touches[0].clientY - touchStartY;
       if (dragLocked === null && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
         dragLocked = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+        dbg('gallery dragLocked=' + dragLocked + ' dx=' + dx.toFixed(0) + ' dy=' + dy.toFixed(0));
       }
       if (dragLocked === 'x') {
+        dbg('gallery touchmove dx=' + dx.toFixed(0) + ' cancelable=' + e.cancelable);
         if (e.cancelable) e.preventDefault();
         dragPx = dx;
         setLiveOffset(dragPx);
       }
     }, {passive:false});
     gallerySlider.addEventListener('touchend', () => {
+      dbg('gallery touchend, active=' + touchActive + ' dragLocked=' + dragLocked + ' dragPx=' + dragPx);
       if (!touchActive) return;
       touchActive = false;
       track.style.transition = '';
@@ -816,6 +846,7 @@
       resetTimer();
     });
     gallerySlider.addEventListener('touchcancel', () => {
+      dbg('gallery touchcancel');
       touchActive = false;
       track.style.transition = '';
       go(idx);
