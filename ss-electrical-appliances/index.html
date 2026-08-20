@@ -619,7 +619,7 @@
     </div>
   </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/motion@13.1.0/dist/motion.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@13.1.0/dist/motion.js" crossorigin="anonymous"></script>
 <script>
   // on-page debug log — only active with ?debug=1 in the URL, invisible otherwise, for diagnosing touch issues on real phones without remote devtools
   const DEBUG_MODE = /[?&]debug=1/.test(location.search);
@@ -642,46 +642,62 @@
     dbg('debug mode on. touchpoints=' + navigator.maxTouchPoints + ' ua=' + navigator.userAgent.slice(0,60));
   }
 
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (typeof Motion === 'undefined' || reduceMotion) {
-    document.documentElement.classList.add('no-motion');
-  } else {
-    const { animate, inView, stagger, hover, press } = Motion;
-    const easeOut = [.22,1,.36,1];
+  // Animation layer is optional polish — never let it block core page functionality (sliders, forms, nav)
+  // if Motion.js throws on some device/browser. Wrapped in try/catch as a hard isolation boundary.
+  try {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (typeof Motion === 'undefined' || reduceMotion) {
+      document.documentElement.classList.add('no-motion');
+    } else {
+      const { animate, inView, stagger, hover, press } = Motion;
+      const easeOut = [.22,1,.36,1];
 
-    const groups = [['.services-grid','.service-card'], ['.why-grid','.why-item']];
-    const groupedEls = new Set();
-    groups.forEach(([groupSel, itemSel])=>{
-      document.querySelectorAll(groupSel).forEach(group=>{
-        const items = group.querySelectorAll(itemSel);
-        items.forEach(el=>groupedEls.add(el));
-        inView(group, ()=>{
-          animate(items, {opacity:[0,1], y:[20,0]}, {delay:stagger(.08), duration:.6, easing:easeOut});
+      const groups = [['.services-grid','.service-card'], ['.why-grid','.why-item']];
+      const groupedEls = new Set();
+      groups.forEach(([groupSel, itemSel])=>{
+        document.querySelectorAll(groupSel).forEach(group=>{
+          const items = group.querySelectorAll(itemSel);
+          items.forEach(el=>groupedEls.add(el));
+          inView(group, ()=>{
+            animate(items, {opacity:[0,1], y:[20,0]}, {delay:stagger(.08), duration:.6, easing:easeOut});
+          }, {margin:'0px 0px -10% 0px'});
+        });
+      });
+
+      document.querySelectorAll('.reveal').forEach(el=>{
+        if (groupedEls.has(el) || el.matches('.services-grid, .why-grid')) return;
+        inView(el, ()=>{
+          animate(el, {opacity:[0,1], y:[24,0]}, {duration:.7, easing:easeOut});
         }, {margin:'0px 0px -10% 0px'});
       });
-    });
 
-    document.querySelectorAll('.reveal').forEach(el=>{
-      if (groupedEls.has(el) || el.matches('.services-grid, .why-grid')) return;
-      inView(el, ()=>{
-        animate(el, {opacity:[0,1], y:[24,0]}, {duration:.7, easing:easeOut});
-      }, {margin:'0px 0px -10% 0px'});
-    });
+      animate(['.hero-badge','.hero h1','.hero p','.hero-actions'],
+        {opacity:[0,1], y:[16,0]}, {delay:stagger(.12), duration:.8, easing:easeOut});
 
-    animate(['.hero-badge','.hero h1','.hero p','.hero-actions'],
-      {opacity:[0,1], y:[16,0]}, {delay:stagger(.12), duration:.8, easing:easeOut});
+      hover('.service-card', (el)=>{
+        animate(el, {scale:1.012}, {type:'spring', stiffness:300, damping:22});
+        return ()=>animate(el, {scale:1}, {type:'spring', stiffness:300, damping:22});
+      });
 
-    hover('.service-card', (el)=>{
-      animate(el, {scale:1.012}, {type:'spring', stiffness:300, damping:22});
-      return ()=>animate(el, {scale:1}, {type:'spring', stiffness:300, damping:22});
-    });
-
-    press('.btn-primary, .btn-ghost, .form-submit', (el)=>{
-      animate(el, {scale:.96}, {duration:.1});
-      return ()=>animate(el, {scale:1}, {type:'spring', stiffness:400, damping:17});
-    });
+      press('.btn-primary, .btn-ghost, .form-submit', (el)=>{
+        animate(el, {scale:.96}, {duration:.1});
+        return ()=>animate(el, {scale:1}, {type:'spring', stiffness:400, damping:17});
+      });
+    }
+  } catch (err) {
+    // Animation library failed — fall back to the no-motion CSS state and keep going.
+    // This is the fix for a real bug: Motion.js was throwing on some devices and, being
+    // uncaught, was halting this entire inline <script> block before it ever reached the
+    // compare-slider / gallery-slider setup code below — which is why those looked "broken."
+    document.documentElement.classList.add('no-motion');
+    dbg('MOTION SETUP FAILED (caught, continuing): ' + (err && err.message));
+    console.error('Motion setup failed:', err);
   }
 
+  // Each interactive feature below is wrapped in its own try/catch so a failure in one
+  // (e.g. a missing element on a given page variant) can never cascade and silently kill
+  // features listed after it in the script — the exact failure mode that broke the sliders.
+  try {
   const slider = document.getElementById('compareSlider');
   const afterWrap = document.getElementById('afterWrap');
   const handle = document.getElementById('handle');
@@ -725,7 +741,9 @@
     slider.addEventListener('touchend', endDrag);
     slider.addEventListener('touchcancel', endDrag);
   }
+  } catch (err) { dbg('COMPARE SLIDER SETUP FAILED: ' + (err && err.message)); console.error('Compare slider setup failed:', err); }
 
+  try {
   const qf = document.getElementById('quoteForm');
   qf.addEventListener('submit', (e)=>{
     e.preventDefault();
@@ -738,10 +756,12 @@
     window.location.href = `mailto:info@sselectricalandappliances.ca?subject=${subject}&body=${body}`;
     document.getElementById('qf-success').style.display = 'block';
   });
+  } catch (err) { dbg('QUOTE FORM SETUP FAILED: ' + (err && err.message)); console.error('Quote form setup failed:', err); }
 
   // shared flag so a swipe on the slider doesn't also pop the lightbox open
   let sliderJustSwiped = false;
 
+  try {
   // gallery lightbox — click the current slide to see it full-size
   const lightbox = document.getElementById('lightbox');
   if (lightbox) {
@@ -767,7 +787,9 @@
     lbImg.addEventListener('click', (e) => e.stopPropagation());
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
   }
+  } catch (err) { dbg('LIGHTBOX SETUP FAILED: ' + (err && err.message)); console.error('Lightbox setup failed:', err); }
 
+  try {
   // gallery slider — auto-advance, arrows, dots, pause on hover
   const gallerySlider = document.getElementById('gallerySlider');
   dbg('gallerySlider found=' + !!gallerySlider);
@@ -860,6 +882,7 @@
     });
     gallerySlider.addEventListener('touchcancel', () => { touchActive = false; });
   }
+  } catch (err) { dbg('GALLERY SLIDER SETUP FAILED: ' + (err && err.message)); console.error('Gallery slider setup failed:', err); }
 </script>
 </body>
 </html>
