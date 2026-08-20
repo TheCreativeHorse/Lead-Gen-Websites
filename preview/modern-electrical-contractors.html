@@ -195,7 +195,7 @@
   .compare{
     position:relative;max-width:780px;margin:0 auto;border-radius:20px;overflow:hidden;
     box-shadow:0 30px 60px -20px rgba(0,0,0,.25);aspect-ratio:16/10;cursor:ew-resize;
-    user-select:none;
+    user-select:none;touch-action:none;
   }
   .compare img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
   .compare .after-wrap{position:absolute;inset:0;overflow:hidden;clip-path:inset(0 0 0 50%);}
@@ -214,7 +214,7 @@
   .compare .tag.after{right:16px;background:rgba(0,0,0,.55);}
 
   /* ---------- photo gallery: one photo at a time, auto-advancing slider ---------- */
-  .slider{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:16/9;background:var(--paper-soft);box-shadow:0 24px 50px -20px rgba(0,0,0,.2);}
+  .slider{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:16/9;background:var(--paper-soft);box-shadow:0 24px 50px -20px rgba(0,0,0,.2);touch-action:pan-y;}
   .slider-track{display:flex;height:100%;transition:transform .6s cubic-bezier(.22,1,.36,1);}
   .slide{position:relative;flex:0 0 100%;height:100%;cursor:zoom-in;}
   .slide img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
@@ -660,9 +660,14 @@
     afterWrap.style.clipPath = `inset(0 0 0 ${pct}%)`;
     handle.style.left = pct+'%';
   }
-  slider.addEventListener('pointerdown',(e)=>{dragging=true; setPos(e.clientX);});
-  window.addEventListener('pointermove',(e)=>{if(dragging) setPos(e.clientX);});
+  slider.addEventListener('pointerdown',(e)=>{
+    dragging=true;
+    if (slider.setPointerCapture) { try { slider.setPointerCapture(e.pointerId); } catch(err){} }
+    setPos(e.clientX);
+  });
+  slider.addEventListener('pointermove',(e)=>{if(dragging){ e.preventDefault(); setPos(e.clientX); }});
   window.addEventListener('pointerup',()=>dragging=false);
+  window.addEventListener('pointercancel',()=>dragging=false);
 
   const qf = document.getElementById('quoteForm');
   qf.addEventListener('submit', (e)=>{
@@ -677,12 +682,16 @@
     document.getElementById('qf-success').style.display = 'block';
   });
 
+  // shared flag so a swipe on the slider doesn't also pop the lightbox open
+  let sliderJustSwiped = false;
+
   // gallery lightbox — click the current slide to see it full-size
   const lightbox = document.getElementById('lightbox');
   if (lightbox) {
     const lbImg = lightbox.querySelector('img');
     document.querySelectorAll('.slide').forEach((fig) => {
       fig.addEventListener('click', () => {
+        if (sliderJustSwiped) { sliderJustSwiped = false; return; }
         const img = fig.querySelector('img');
         if (!img) return;
         lbImg.src = img.src;
@@ -732,6 +741,29 @@
     resetTimer();
     gallerySlider.addEventListener('mouseenter', () => clearInterval(timer));
     gallerySlider.addEventListener('mouseleave', resetTimer);
+
+    // swipe left/right to change photo on touch devices
+    let touchStartX = 0, touchStartY = 0, touchMoved = false;
+    gallerySlider.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchMoved = false;
+    }, {passive:true});
+    gallerySlider.addEventListener('touchmove', (e) => {
+      touchMoved = true;
+    }, {passive:true});
+    gallerySlider.addEventListener('touchend', (e) => {
+      if (!touchMoved) return;
+      const touchEndX = e.changedTouches[0].clientX;
+      const touchEndY = e.changedTouches[0].clientY;
+      const dx = touchStartX - touchEndX;
+      const dy = touchStartY - touchEndY;
+      if (Math.abs(dx) > 36 && Math.abs(dx) > Math.abs(dy)) {
+        sliderJustSwiped = true;
+        if (dx > 0) go(idx + 1); else go(idx - 1);
+        resetTimer();
+      }
+    });
   }
 </script>
 </body>
