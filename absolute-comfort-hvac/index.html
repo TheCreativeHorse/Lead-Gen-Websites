@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Absolute Comfort Heating & Air Conditioning | Mississauga HVAC Company</title>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HVACBusiness",
+  "name": "Absolute Comfort Heating & Air Conditioning",
+  "telephone": "905-271-2911",
+  "email": "info@absolutecomfort.ca",
+  "areaServed": "Mississauga",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "227"
+  }
+}
+</script>
+<style>
+  :root{
+    --brand-primary:#1f3547;
+    --brand-primary-dark:#13232f;
+    --brand-accent:#4a9bd1;
+    --ink:#0d1117;
+    --ink-soft:#4b5563;
+    --paper:#ffffff;
+    --paper-soft:#f7f8fa;
+    --line:#e6e8eb;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+  .reveal{opacity:0;transform:translateY(24px);}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1!important;transform:none!important;}
+  }
+  .no-motion .reveal{opacity:1;transform:none;}
+
+  /* ---------- icons: monochrome stroke, no color fill ---------- */
+  .icon{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+
+  /* ---------- sticky mobile call bar ---------- */
+  .call-bar{
+    position:fixed;bottom:0;left:0;right:0;z-index:60;
+    background:var(--ink);
+    display:flex;
+    box-shadow:0 -6px 24px rgba(0,0,0,.18);
+  }
+  .call-bar a{
+    flex:1;text-align:center;color:#fff;font-weight:600;font-size:15px;
+    padding:14px 8px;display:flex;align-items:center;justify-content:center;gap:8px;
+  }
+  .call-bar a:first-child{background:var(--brand-primary-dark);}
+  @media (min-width:900px){.call-bar{display:none;}}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,.85);
+    backdrop-filter:blur(14px) saturate(160%);
+    -webkit-backdrop-filter:blur(14px) saturate(160%);
+    border-bottom:1px solid var(--line);
+  }
+  header .wrap{display:flex;align-items:center;justify-content:space-between;height:76px;}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:.2px;}
+  .logo-mark{
+    width:36px;height:36px;border-radius:10px;
+    background:var(--ink);
+    display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px;
+  }
+  nav{display:none;gap:32px;font-size:14px;font-weight:600;color:var(--ink-soft);}
+  @media (min-width:900px){nav{display:flex;}}
+  nav a{transition:color .2s;}
+  nav a:hover{color:var(--brand-primary-dark);}
+  .header-cta{
+    display:none;
+    background:var(--ink);color:#fff;padding:10px 20px;border-radius:999px;
+    font-weight:700;font-size:14px;
+  }
+  @media (min-width:900px){.header-cta{display:inline-block;}}
+
+  /* ---------- hero: real photo, not a color gradient ---------- */
+  .hero{position:relative;min-height:min(82vh,660px);display:flex;align-items:flex-end;overflow:hidden;color:#fff;}
+  .hero-bg{position:absolute;inset:0;z-index:0;}
+  .hero-bg img{width:100%;height:100%;object-fit:cover;}
+  .hero-bg::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(6,8,12,.28) 0%, rgba(6,8,12,.5) 45%, rgba(6,8,12,.86) 100%);
+  }
+  /* text sits on its own frosted panel, never directly on the raw photo — legibility can't depend on how busy/bright the photo is */
+  .hero-inner{
+    position:relative;z-index:2;max-width:640px;margin:0 0 56px;
+    padding:32px 34px 36px;border-radius:20px;
+    background:rgba(7,9,13,.55);
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+    border:1px solid rgba(255,255,255,.09);
+    box-shadow:0 24px 60px -20px rgba(0,0,0,.45);
+  }
+  .hero-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);
+    padding:7px 16px;border-radius:999px;font-size:13px;font-weight:600;
+    margin-bottom:18px;color:#f1f2f5;
+  }
+  .hero-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--brand-accent);}
+  .hero h1{
+    font-size:clamp(26px,3.6vw,40px);
+    line-height:1.18;font-weight:800;letter-spacing:-0.6px;
+    margin-bottom:16px;
+  }
+  .hero p{font-size:16px;line-height:1.6;color:#dde0e6;margin-bottom:26px;}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+  @media (max-width:699px){
+    .hero{min-height:auto;}
+    .hero-inner{margin:0 0 28px;padding:24px 20px 26px;max-width:none;}
+  }
+
+  /* flat, solid buttons — no animated gradient border */
+  .btn-primary{
+    padding:15px 28px;border-radius:12px;font-weight:700;font-size:15px;
+    background:var(--brand-primary-dark);color:#fff;display:inline-flex;align-items:center;gap:10px;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-primary:hover{box-shadow:0 12px 26px -10px color-mix(in srgb, var(--brand-primary) 55%, transparent);}
+  .btn-ghost{
+    padding:15px 26px;border-radius:12px;font-weight:700;font-size:15px;
+    border:1px solid rgba(255,255,255,.3);color:#fff;
+    transition:background .2s,border-color .2s;
+  }
+  .btn-ghost:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.55);}
+  .btn-ghost.dark{border-color:var(--line);color:var(--ink);}
+  .btn-ghost.dark:hover{background:var(--paper-soft);}
+
+  /* ---------- trust strip ---------- */
+  .trust{background:var(--paper-soft);border-bottom:1px solid var(--line);}
+  .trust .wrap{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:28px;
+    padding:32px 24px;text-align:center;
+  }
+  @media (min-width:700px){.trust .wrap{grid-template-columns:repeat(4,1fr);}}
+  .trust-stat b{display:block;font-size:25px;font-weight:800;color:var(--ink);}
+  .trust-stat span{font-size:13px;color:var(--ink-soft);font-weight:600;}
+
+  /* ---------- section shell ---------- */
+  section{padding:84px 0;}
+  .eyebrow{
+    display:inline-block;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--brand-primary-dark);margin-bottom:14px;
+  }
+  .section-head{max-width:620px;margin:0 auto 48px;text-align:center;}
+  .section-head p{color:var(--ink-soft);font-size:16px;line-height:1.6;}
+  .section-head h2{font-size:clamp(26px,3.4vw,36px);font-weight:800;letter-spacing:-.6px;margin-bottom:12px;}
+
+  /* ---------- services: plain cards, monochrome icon, no gradient fill ---------- */
+  .services-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;}
+  @media (min-width:700px){.services-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (min-width:1000px){.services-grid{grid-template-columns:repeat(3,1fr);}}
+  .service-card{background:var(--paper);padding:30px 26px;transition:background .2s ease;}
+  .service-card:hover{background:var(--paper-soft);}
+  .service-icon{
+    width:42px;height:42px;border-radius:10px;margin-bottom:16px;
+    background:var(--paper-soft);border:1px solid var(--line);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .service-card h3{font-size:16px;font-weight:700;margin-bottom:8px;}
+  .service-card p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+
+  /* ---------- callout: plain flat surface, no photo, no gradient — brand color used nowhere here ---------- */
+  .callout{border-radius:24px;background:var(--paper-soft);border:1px solid var(--line);padding:48px 40px;display:grid;gap:26px;}
+  @media (min-width:900px){.callout{grid-template-columns:1.1fr .9fr;align-items:center;padding:56px;}}
+  .callout h2{font-size:clamp(24px,3vw,32px);font-weight:800;margin-bottom:14px;color:var(--ink);}
+  .callout p{color:var(--ink-soft);line-height:1.65;margin-bottom:20px;}
+  .callout-stats{display:flex;gap:28px;flex-wrap:wrap;}
+  .callout-stats div b{display:block;font-size:26px;font-weight:800;color:var(--ink);}
+  .callout-stats div span{font-size:13px;color:var(--ink-soft);}
+  .callout-card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:24px;}
+  .callout-card .row{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--ink-soft);}
+  .callout-card .row:last-child{border-bottom:none;}
+  .callout-card .row b{color:var(--ink);}
+
+  /* ---------- before / after compare slider ---------- */
+  .compare{
+    position:relative;max-width:780px;margin:0 auto;border-radius:20px;overflow:hidden;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.25);aspect-ratio:16/10;cursor:ew-resize;
+    user-select:none;-webkit-user-select:none;touch-action:none;-webkit-touch-callout:none;
+  }
+  .compare img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    touch-action:none;-webkit-touch-callout:none;-webkit-user-drag:none;
+    user-select:none;-webkit-user-select:none;pointer-events:none;
+  }
+  .compare .after-wrap{position:absolute;inset:0;overflow:hidden;clip-path:inset(0 0 0 50%);}
+  .compare .handle{
+    position:absolute;top:0;bottom:0;left:50%;width:3px;background:#fff;
+    transform:translateX(-1.5px);
+  }
+  .compare .handle::after{
+    content:"⇔";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:44px;height:44px;border-radius:50%;background:#fff;color:var(--ink);
+    display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+  }
+  .compare .tag{position:absolute;top:16px;padding:6px 14px;border-radius:999px;font-size:12px;font-weight:700;color:#fff;}
+  .compare .tag.before{left:16px;background:rgba(0,0,0,.55);}
+  .compare .tag.after{right:16px;background:rgba(0,0,0,.55);}
+
+  /* ---------- photo gallery: one photo at a time, auto-advancing slider ---------- */
+  .slider{
+    position:relative;border-radius:20px;overflow:hidden;aspect-ratio:16/9;background:var(--paper-soft);
+    box-shadow:0 24px 50px -20px rgba(0,0,0,.2);touch-action:pan-y;-webkit-touch-callout:none;
+  }
+  .slider-track{display:flex;height:100%;transition:transform .6s cubic-bezier(.22,1,.36,1);touch-action:pan-y;}
+  .slide{position:relative;flex:0 0 100%;height:100%;cursor:zoom-in;touch-action:pan-y;-webkit-touch-callout:none;}
+  .slide img{
+    width:100%;height:100%;object-fit:cover;object-position:center;display:block;
+    touch-action:pan-y;-webkit-touch-callout:none;-webkit-user-drag:none;
+    user-select:none;-webkit-user-select:none;pointer-events:none;
+  }
+  .slide figcaption{
+    position:absolute;left:0;right:0;bottom:0;padding:22px 26px;font-size:14px;font-weight:600;color:#fff;
+    background:linear-gradient(180deg,transparent,rgba(0,0,0,.72));
+  }
+  .slider-arrow{
+    position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;
+    background:rgba(255,255,255,.92);border:none;color:var(--ink);font-size:22px;font-weight:800;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;z-index:3;
+  }
+  .slider-arrow:hover{background:#fff;}
+  .slider-arrow.prev{left:16px;}
+  .slider-arrow.next{right:16px;}
+  .slider-dots{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:3;}
+  .slider-dots button{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.5);border:none;padding:0;cursor:pointer;transition:background .2s,width .2s;}
+  .slider-dots button.active{background:#fff;width:22px;border-radius:4px;}
+  @media (max-width:699px){.slider{aspect-ratio:4/3;}}
+
+  /* ---------- FAQ: plain accordion, native <details>, small accent stripe only ---------- */
+  .faq-list{max-width:760px;margin:0 auto;display:grid;gap:14px;}
+  .faq-item{background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--brand-accent);border-radius:12px;padding:2px 22px;}
+  .faq-item summary{
+    list-style:none;cursor:pointer;padding:18px 0;font-weight:700;font-size:15.5px;color:var(--ink);
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item .faq-icon{
+    flex:none;width:24px;height:24px;border-radius:50%;background:var(--paper-soft);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:var(--ink-soft);
+    transition:transform .2s;
+  }
+  .faq-item[open] .faq-icon{transform:rotate(45deg);}
+  .faq-item p{padding:0 0 20px;color:var(--ink-soft);font-size:14.5px;line-height:1.65;}
+
+  /* ---------- lightbox: click the current photo to see it full-size ---------- */
+  .lightbox{
+    position:fixed;inset:0;z-index:999;background:rgba(4,5,8,.94);
+    display:none;align-items:center;justify-content:center;padding:32px;cursor:zoom-out;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:min(92vw,1100px);max-height:88vh;object-fit:contain;border-radius:10px;box-shadow:0 30px 80px rgba(0,0,0,.5);}
+  .lightbox-close{
+    position:absolute;top:20px;right:24px;width:44px;height:44px;border-radius:50%;
+    background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);
+    font-size:24px;line-height:1;cursor:pointer;
+  }
+  .lightbox-close:hover{background:rgba(255,255,255,.22);}
+
+  /* ---------- why us ---------- */
+  .why-grid{display:grid;grid-template-columns:1fr;gap:22px;}
+  @media (min-width:700px){.why-grid{grid-template-columns:repeat(2,1fr);}}
+  .why-item{display:flex;gap:16px;}
+  .why-num{
+    flex:none;width:40px;height:40px;border-radius:10px;background:var(--paper-soft);
+    display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--ink);
+    border:1px solid var(--line);font-size:14px;
+  }
+  .why-item h4{font-size:16px;font-weight:700;margin-bottom:6px;}
+  .why-item p{font-size:14px;color:var(--ink-soft);line-height:1.6;}
+
+  /* ---------- testimonial marquee ---------- */
+  .marquee-shell{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);}
+  .marquee-shell.static{-webkit-mask-image:none;mask-image:none;}
+  .marquee-track{display:flex;gap:20px;width:max-content;animation:scroll 34s linear infinite;}
+  .marquee-track.static{animation:none;width:100%;justify-content:center;flex-wrap:wrap;}
+  .marquee-shell:hover .marquee-track{animation-play-state:paused;}
+  @keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  .t-card{
+    width:320px;flex:none;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:24px;
+  }
+  .t-card .stars{color:var(--brand-accent);font-size:14px;margin-bottom:12px;letter-spacing:2px;}
+  .t-card p{font-size:14px;line-height:1.6;color:var(--ink);margin-bottom:16px;}
+  .t-card .who{display:flex;align-items:center;gap:10px;}
+  .t-avatar{
+    width:34px;height:34px;border-radius:50%;background:var(--ink);
+    display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700;
+  }
+  .who b{font-size:13px;display:block;}
+  .who span{font-size:12px;color:var(--ink-soft);}
+
+  /* ---------- final CTA: flat solid surface, no photo, no gradient ---------- */
+  .cta-band{border-radius:28px;padding:64px 32px;text-align:center;color:#fff;background:var(--ink);min-height:280px;display:flex;align-items:center;justify-content:center;}
+  .cta-band h2{font-size:clamp(26px,3.6vw,36px);font-weight:800;margin-bottom:14px;}
+  .cta-band p{color:#c7cbd3;margin-bottom:28px;font-size:16px;}
+  .cta-band .hero-actions{justify-content:center;}
+
+  footer{background:var(--ink);color:#aab1c0;padding:48px 0 100px;font-size:13px;}
+  @media (min-width:900px){footer{padding:48px 0;}}
+  footer .wrap{display:flex;flex-direction:column;gap:16px;align-items:center;text-align:center;}
+  @media (min-width:700px){footer .wrap{flex-direction:row;justify-content:space-between;text-align:left;}}
+  .footer-socials{display:flex;gap:12px;}
+  .footer-socials a{
+    width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.18);
+    display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s;
+  }
+  .footer-socials a:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.4);}
+  .footer-socials svg{width:16px;height:16px;fill:#c9cfda;}
+  .footer-credit{font-size:12px;color:#7a8093;margin-top:6px;}
+  .footer-credit a{color:#9aa1b5;text-decoration:underline;text-underline-offset:2px;}
+  footer .foot-col{display:flex;flex-direction:column;gap:12px;align-items:center;}
+  @media (min-width:700px){footer .foot-col{align-items:flex-start;}}
+
+  /* ---------- whatsapp floating button ---------- */
+  .wa-fab{
+    position:fixed;right:20px;bottom:28px;z-index:55;
+    width:58px;height:58px;border-radius:50%;
+    background:#25D366;box-shadow:0 10px 26px -6px rgba(37,211,102,.55);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .wa-fab svg{width:28px;height:28px;fill:#fff;}
+  .wa-fab::before{
+    content:"";position:absolute;inset:0;border-radius:50%;background:#25D366;
+    animation:wa-pulse 2.4s ease-out infinite;z-index:-1;
+  }
+  @keyframes wa-pulse{0%{transform:scale(1);opacity:.55;}100%{transform:scale(1.9);opacity:0;}}
+  @media (max-width:899px){.wa-fab{bottom:88px;right:16px;width:52px;height:52px;}.wa-fab svg{width:24px;height:24px;}}
+
+  /* ---------- contact section: two column ---------- */
+  .contact-grid{display:grid;grid-template-columns:1fr;gap:24px;align-items:stretch;}
+  @media (min-width:900px){.contact-grid{grid-template-columns:1.05fr .95fr;}}
+  .contact-grid .cta-band{margin:0;height:100%;}
+  .form-card{
+    background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:36px;
+  }
+  .form-card h3{font-size:20px;font-weight:800;margin-bottom:6px;}
+  .form-card .sub{font-size:14px;color:var(--ink-soft);margin-bottom:24px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px;color:var(--ink);}
+  .field input,.field select,.field textarea{
+    width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--line);
+    background:var(--paper-soft);font-size:14px;font-family:inherit;color:var(--ink);
+    transition:border-color .2s,box-shadow .2s;
+  }
+  .field input:focus,.field select:focus,.field textarea:focus{
+    outline:none;border-color:var(--brand-primary);
+    box-shadow:0 0 0 3px color-mix(in srgb, var(--brand-primary) 18%, transparent);
+  }
+  .field textarea{resize:vertical;min-height:96px;}
+  .form-submit{
+    width:100%;border:none;cursor:pointer;padding:14px;border-radius:11px;font-weight:700;font-size:15px;
+    background:var(--brand-primary-dark);color:#fff;
+  }
+  .form-note{font-size:12px;color:var(--ink-soft);margin-top:10px;text-align:center;}
+  .form-success{
+    display:none;background:color-mix(in srgb, var(--brand-accent) 16%, transparent);
+    border:1px solid color-mix(in srgb, var(--brand-accent) 40%, transparent);
+    padding:12px 14px;border-radius:10px;font-size:13px;font-weight:600;margin-top:14px;
+  }
+  a,button,.service-card,.slide{cursor:pointer;}
+</style>
+</head>
+<body>
+
+  <div class="call-bar">
+    <a href="tel:9052712911">📞 Call 905-271-2911</a>
+    <a href="#contact" style="background:var(--brand-primary-dark);">Get Free Site</a>
+  </div>
+
+  <a class="wa-fab" href="https://wa.me/19052712911?text=Hi%20Absolute%20Comfort%20HVAC%2C%20I%20found%20you%20on%20Google%20and%20have%20a%20question" target="_blank" rel="noopener" aria-label="Message us on WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5C10.1 9 9.6 7.8 9.4 7.3c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.1L2 22l5-1.3c1.4.8 3.1 1.3 4.9 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.3c-1.6 0-3.2-.4-4.5-1.2l-.3-.2-3 .8.8-2.9-.2-.3C4 15.1 3.5 13.6 3.5 12c0-4.7 3.8-8.5 8.5-8.5s8.5 3.8 8.5 8.5-3.8 8.3-8.5 8.3z"/></svg>
+  </a>
+
+  <header>
+    <div class="wrap">
+      <div class="logo"><div class="logo-mark">AC</div>Absolute Comfort Heating & Air Conditioning</div>
+      <nav>
+        <a href="#services">Services</a>
+        <a href="#work">Our Work</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="header-cta" href="tel:9052712911">905-271-2911</a>
+    </div>
+  </header>
+
+  <section class="hero" id="hero">
+    <div class="hero-bg"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTIwIiBoZWlnaHQ9IjEwODAiIHZpZXdCb3g9IjAgMCAxOTIwIDEwODAiPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJiZ0dyYWQiIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj4KPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMzMzZDRhIi8+CjxzdG9wIG9mZnNldD0iMC41NSIgc3RvcC1jb2xvcj0iIzRhNTc2OCIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyYjMzM2UiLz4KPC9saW5lYXJHcmFkaWVudD4KPHJhZGlhbEdyYWRpZW50IGlkPSJhY2NlbnRHbG93IiBjeD0iMC44MiIgY3k9IjAuODUiIHI9IjAuNjUiPgo8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNkOThhM2YiIHN0b3Atb3BhY2l0eT0iMC4zOCIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNkOThhM2YiIHN0b3Atb3BhY2l0eT0iMCIvPgo8L3JhZGlhbEdyYWRpZW50Pgo8cmFkaWFsR3JhZGllbnQgaWQ9ImFjY2VudEdsb3cyIiBjeD0iMC4xMiIgY3k9IjAuMSIgcj0iMC41Ij4KPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmZmZmZmIiBzdG9wLW9wYWNpdHk9IjAuMTAiLz4KPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZmZmZmZmIiBzdG9wLW9wYWNpdHk9IjAiLz4KPC9yYWRpYWxHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTkyMCIgaGVpZ2h0PSIxMDgwIiBmaWxsPSJ1cmwoI2JnR3JhZCkiLz4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjE5MjAiIGhlaWdodD0iMTA4MCIgZmlsbD0idXJsKCNhY2NlbnRHbG93MikiLz4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjE5MjAiIGhlaWdodD0iMTA4MCIgZmlsbD0idXJsKCNhY2NlbnRHbG93KSIvPgo8bGluZSB4MT0iMCIgeTE9IjAiIHgyPSIxOTIwIiB5Mj0iMTA4MCIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utb3BhY2l0eT0iMC4wNDUiIHN0cm9rZS13aWR0aD0iMiIvPgo8ZyBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS1vcGFjaXR5PSIwLjE0IiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiPgo8cGF0aCBkPSJNMTE4MCAxMTAgTDExODAgMjIwIEwxMzMwIDIyMCBMMTMzMCAzNDAiLz4KPHBhdGggZD0iTTEzMzAgMzQwIEwxNDcwIDM0MCIvPgo8cGF0aCBkPSJNMTQxMCA4NSBMMTQxMCAxNzAgTDE1ODAgMTcwIi8+CjxwYXRoIGQ9Ik0xNTgwIDE3MCBMMTU4MCAyODAgTDE3MjAgMjgwIi8+CjxwYXRoIGQ9Ik0xNjkwIDQyMCBMMTgwMCA0MjAgTDE4MDAgNTMwIi8+CjxwYXRoIGQ9Ik0xMjQwIDQ1MCBMMTI0MCA1NjAgTDExMzAgNTYwIi8+CjxwYXRoIGQ9Ik0xNjMwIDUzMCBMMTYzMCA2NDAgTDE3NzAgNjQwIi8+CjxwYXRoIGQ9Ik0xMjcwIDI1MCBMMTI3MCAxNzAiLz4KPHBhdGggZD0iTTE1MDAgNDgwIEwxNTAwIDM4MCBMMTQyMCAzODAiLz4KPC9nPgo8ZyBmaWxsPSIjZmZmZmZmIiBmaWxsLW9wYWNpdHk9IjAuMjgiPgo8Y2lyY2xlIGN4PSIxMTgwIiBjeT0iMTEwIiByPSI3Ii8+CjxjaXJjbGUgY3g9IjEzMzAiIGN5PSIyMjAiIHI9IjciLz4KPGNpcmNsZSBjeD0iMTQ3MCIgY3k9IjM0MCIgcj0iNyIvPgo8Y2lyY2xlIGN4PSIxNDEwIiBjeT0iODUiIHI9IjciLz4KPGNpcmNsZSBjeD0iMTU4MCIgY3k9IjE3MCIgcj0iNyIvPgo8Y2lyY2xlIGN4PSIxNzIwIiBjeT0iMjgwIiByPSI3Ii8+CjxjaXJjbGUgY3g9IjE4MDAiIGN5PSI0MjAiIHI9IjciLz4KPGNpcmNsZSBjeD0iMTgwMCIgY3k9IjUzMCIgcj0iNyIvPgo8Y2lyY2xlIGN4PSIxMTMwIiBjeT0iNTYwIiByPSI3Ii8+CjxjaXJjbGUgY3g9IjE3NzAiIGN5PSI2NDAiIHI9IjciLz4KPGNpcmNsZSBjeD0iMTI3MCIgY3k9IjE3MCIgcj0iNyIvPgo8Y2lyY2xlIGN4PSIxNTAwIiBjeT0iNDgwIiByPSI3Ii8+CjxjaXJjbGUgY3g9IjE0MjAiIGN5PSIzODAiIHI9IjciLz4KPC9nPgo8ZyBmaWxsPSIjZDk4YTNmIiBmaWxsLW9wYWNpdHk9IjAuNyI+CjxjaXJjbGUgY3g9IjE1ODAiIGN5PSIxNzAiIHI9IjgiLz4KPGNpcmNsZSBjeD0iMTY5MCIgY3k9IjQyMCIgcj0iOCIvPgo8Y2lyY2xlIGN4PSIxNjMwIiBjeT0iNTMwIiByPSI4Ii8+CjxjaXJjbGUgY3g9IjEzMzAiIGN5PSIzNDAiIHI9IjgiLz4KPC9nPgo8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTkyMCIgaGVpZ2h0PSIxMDgwIiBmaWxsPSIjMjAyNTJkIiBmaWxsLW9wYWNpdHk9IjAuMTIiLz4KPC9zdmc+" alt="Absolute Comfort Heating & Air Conditioning at work"></div>
+    <div class="wrap">
+      <div class="hero-inner">
+        <div class="hero-badge"><span class="dot"></span> 4.9★ rated · 227 Google reviews</div>
+        <h1>Five 5-star reviews this month. All unanswered.</h1>
+        <p>Heating and air conditioning repair and maintenance across Mississauga, with Gary as the regular technician customers ask for by name.</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="tel:9052712911">Call 905-271-2911</a>
+          <a class="btn-ghost" href="#contact">Get a free quote</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="trust">
+    <div class="wrap">
+      <div class="trust-stat"><b>4.9★</b><span>Google rating</span></div>
+      <div class="trust-stat"><b>227+</b><span>5-star reviews</span></div>
+      <div class="trust-stat"><b>227+ reviews</b><span>Google reviews</span></div>
+      <div class="trust-stat"><b>Licensed</b><span>& fully insured</span></div>
+    </div>
+  </div>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">What we do</span>
+        <h2>HVAC work, done right the first time</h2>
+        <p>Absolute Comfort Heating & Air Conditioning has served Mississauga homes for years, with Gary as the familiar face behind most repeat visits — customers regularly note he's 'our regular guy' who knows their system. Five different customers left 5-star reviews between August 4th and 20th — Stephen, John, Mona, Dan, and Maria — and none of them have a reply from the business yet.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal"><div class="service-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M12 2c-3 4-5 6.5-5 9.5A5 5 0 0 0 12 17a5 5 0 0 0 5-5.5C17 8.5 15 6 12 2Z"/></svg></div><h3>AC Repair</h3><p>Diagnostics and repair for residential air conditioning.</p></div>
+        <div class="service-card reveal"><div class="service-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M12 2v20M4.5 6l15 12M19.5 6l-15 12"/></svg></div><h3>Furnace Repair</h3><p>Furnace troubleshooting and repair.</p></div>
+        <div class="service-card reveal"><div class="service-icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/></svg></div><h3>Seasonal Maintenance</h3><p>Regular tune-ups to keep systems running efficiently.</p></div>
+        <div class="service-card reveal"><div class="service-icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M12 4c2 1 2 4 0 5M12 20c2-1 2-4 0-5M4 12c1-2 4-2 5 0M20 12c-1 2-4 2-5 0"/></svg></div><h3>System Installation</h3><p>New furnace and AC system installation.</p></div>
+        <div class="service-card reveal"><div class="service-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 10v4"/><circle cx="12" cy="17.5" r=".6" fill="currentColor" stroke="none"/></svg></div><h3>Emergency Service</h3><p>Fast response for heating and cooling failures.</p></div>
+        <div class="service-card reveal"><div class="service-icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 4.5v2M12 17.5v2M4.5 12h2M17.5 12h2M6.5 6.5l1.5 1.5M16 16l1.5 1.5M17.5 6.5 16 8M8 16l-1.5 1.5"/></svg></div><h3>Free Estimates</h3><p>A clear price before any work begins.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="callout reveal">
+        <div>
+          <h2>You'll actually hear back from us</h2>
+          <p>We know the feeling of leaving a message with a contractor and never hearing back. That's not how Absolute Comfort Heating & Air Conditioning operates. Every call and message gets a real reply from a real person, usually the same day, so you're not left wondering if the job is happening.</p>
+          <div class="callout-stats">
+            <div><b>4.9★</b><span>average rating from 227+ Mississauga customers</span></div>
+            <div><b>Same-day</b><span>replies to calls and messages</span></div>
+          </div>
+        </div>
+        <div class="callout-card">
+          <div class="row"><span>Called at 6:42pm</span><b>Answered same evening</b></div>
+          <div class="row"><span>Quote given upfront</span><b>No surprises later</b></div>
+          <div class="row"><span>Job booked</span><b>Done right, first time</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Before &amp; after</span>
+        <h2>What a proper job actually looks like</h2>
+        <p>Drag to compare. This is the same standard Absolute Comfort Heating & Air Conditioning holds on every job, before customers even see it.</p>
+      </div>
+      <div class="compare reveal" id="compareSlider">
+        <img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnhirrAXO8nFvAWWwlUU5ldQBwMWpV0ehx-PDsJe8IjNSGXPTtRkbTU2Htv_mu49S4t5MEaISKqE4d0-JbcNh-PKfkHOnsTBjGQC89C1I-G4pfB2Ie4YKtHMgRS9ITJZLJE2pNJ=w1600-h1200-k-no" alt="Before">
+        <div class="after-wrap" id="afterWrap"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkASXCv7SnkcGneDoATB4r9oN_mnJJmC3jOewxmD0GAwQVEfHZgrGqk6jbjloj0V8_uZjB9Q8FrKl6IwKM6hCL75GnOu9ctHsX8FjDnjFyuSwJPP50E-HV1jVjPLrynvoN_3fn_=w1600-h1200-k-no" alt="After"></div>
+        <div class="handle" id="handle"></div>
+        <span class="tag before">Before</span>
+        <span class="tag after">After</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Recent work</span>
+        <h2>Real jobs, real Mississauga homes</h2>
+      </div>
+      <div class="slider reveal" id="gallerySlider">
+        <div class="slider-track" id="sliderTrack">
+          <figure class="slide"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWk3NNN5taEjS4pNrDi4Byh1ABKEod_c9qaxNeYXMFeXLy_OSQVxDyLxjxN3F-jLpApajdwsUxAIvsEakNxuqQb9xH-B-u7iYTrqeb332hC9bJwG3jzY2NT4OUyc3HHBAfOj-c5DZw=w1600-h1200-k-no" alt="Recent job 1"><figcaption>AC service, Mississauga</figcaption></figure>
+          <figure class="slide"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWktKtTm6iycccCHAAMuGpTNok17Dk6Dbt1V0pmWpxyHt7QPr8ffdeLsJ_YDuuQXxp8-pzrvcs1-fxdwS8bXNCDAmgMOoLbjhdMFsUkU2bqE_o51lQ4Z5TL7oXAgwGtC2N0we9rG=w1600-h1200-k-no" alt="Recent job 2"><figcaption>Furnace repair visit</figcaption></figure>
+          <figure class="slide"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmRI965zbDoStb-yPkIDTclL27Qf0Z5LMignwuUniOyzmtIlrXyMgPiTXnTu5aXZwJ3IA9GzgqQH1dhV9t7DI1a0eVgg9bI8oN7FjwihbcSWB5D0IHbixgQhsb3V_g1RuBRQt0bVw=w1600-h1200-k-no" alt="Recent job 3"><figcaption>Seasonal maintenance</figcaption></figure>
+          <figure class="slide"><img src="https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlQKJ6yCI6FA6yZHQq8SEjKRQiyq03TMDnpaZd1SUSHZpRUjtLk05MycyFK-7MoyEikizDW2gkkhXV97pz9IeS_HAz_3PwE7HwvsjPWhiaUFCr3IO2Uu4pqj8Ps_3aiIwTlFUZfvQ=w1600-h1200-k-no" alt="Recent job 4"><figcaption>System check</figcaption></figure>
+        </div>
+        <button class="slider-arrow prev" type="button" id="sliderPrev" aria-label="Previous photo">&#8249;</button>
+        <button class="slider-arrow next" type="button" id="sliderNext" aria-label="Next photo">&#8250;</button>
+        <div class="slider-dots" id="sliderDots"></div>
+      </div>
+    </div>
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+      <button class="lightbox-close" type="button" aria-label="Close">&times;</button>
+      <img src="" alt="">
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">FAQ</span>
+        <h2>Questions people ask before calling</h2>
+      </div>
+      <div class="faq-list reveal">
+        <details class="faq-item" open>
+          <summary>Do you repair air conditioners?<span class="faq-icon">+</span></summary>
+          <p>Yes, AC diagnostics and repair is one of our core services.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do you offer seasonal maintenance?<span class="faq-icon">+</span></summary>
+          <p>Yes, regular tune-ups help keep your system running efficiently year-round.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do you install new systems?<span class="faq-icon">+</span></summary>
+          <p>Yes, we handle new furnace and AC installation.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do you offer emergency service?<span class="faq-icon">+</span></summary>
+          <p>Yes, we respond quickly to heating and cooling failures.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Why Absolute Comfort Heating & Air Conditioning</span>
+        <h2>The stuff that actually earns repeat calls</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-item reveal"><div class="why-num">01</div><div><h4>Upfront pricing</h4><p>No surprise invoices. You know the number before we start.</p></div></div>
+        <div class="why-item reveal"><div class="why-num">02</div><div><h4>Licensed &amp; insured</h4><p>Every job meets code, every time, no shortcuts.</p></div></div>
+        <div class="why-item reveal"><div class="why-num">03</div><div><h4>Same-week availability</h4><p>Most requests get a visit within days, not weeks.</p></div></div>
+        <div class="why-item reveal"><div class="why-num">04</div><div><h4>Mississauga local</h4><p>We know the homes, the permits, and the neighborhoods.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reviews">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Reviews</span>
+        <h2>227+ people already said it</h2>
+      </div>
+    </div>
+    <div class="marquee-shell reveal">
+      <div class="marquee-track" id="track">
+        <div class="t-card"><div class="stars">★★★★★</div><p>"Great responsive service. Always a pleasure to deal with."</p><div class="who"><div class="t-avatar">SR</div><div><b>Stephen Rowe</b><span>Google review</span></div></div></div>
+        <div class="t-card"><div class="stars">★★★★★</div><p>"Helpful, knowledgeable, friendly and efficient, excellent work thanks."</p><div class="who"><div class="t-avatar">JM</div><div><b>John G. MacKay</b><span>Google review</span></div></div></div>
+        <div class="t-card"><div class="stars">★★★★★</div><p>"Great service, our regular guy — he seemed to know his stuff. Fortunately I was home when he was doing the service, my wife said he was very courteous and thorough. A good job as usual, it was an absolute pleasure to have you here again."</p><div class="who"><div class="t-avatar">LJ</div><div><b>Lyall Johnston</b><span>Google review</span></div></div></div>
+        <div class="t-card"><div class="stars">★★★★★</div><p>"Great responsive service. Always a pleasure to deal with."</p><div class="who"><div class="t-avatar">SR</div><div><b>Stephen Rowe</b><span>Google review</span></div></div></div>
+        <div class="t-card"><div class="stars">★★★★★</div><p>"Helpful, knowledgeable, friendly and efficient, excellent work thanks."</p><div class="who"><div class="t-avatar">JM</div><div><b>John G. MacKay</b><span>Google review</span></div></div></div>
+        <div class="t-card"><div class="stars">★★★★★</div><p>"Great service, our regular guy — he seemed to know his stuff. Fortunately I was home when he was doing the service, my wife said he was very courteous and thorough. A good job as usual, it was an absolute pleasure to have you here again."</p><div class="who"><div class="t-avatar">LJ</div><div><b>Lyall Johnston</b><span>Google review</span></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div class="cta-band reveal">
+          <div>
+            <h2>Take a look, no obligation at all</h2>
+            <p>This site is already built for Absolute Comfort Heating & Air Conditioning. If you like it, let's talk. If not, no hard feelings either way.</p>
+            <div class="hero-actions">
+              <a class="btn-primary" href="tel:9052712911">Call 905-271-2911</a>
+              <a class="btn-ghost" href="https://wa.me/19052712911" target="_blank" rel="noopener">WhatsApp us</a>
+            </div>
+          </div>
+        </div>
+        <div class="form-card reveal">
+          <h3>Get a free quote</h3>
+          <p class="sub">Tell us what's going on, we usually reply same day.</p>
+          <form id="quoteForm">
+            <div class="field"><label for="qf-name">Name</label><input id="qf-name" name="name" type="text" required placeholder="Your name"></div>
+            <div class="field"><label for="qf-phone">Phone or email</label><input id="qf-phone" name="contact" type="text" required placeholder="647-555-0134"></div>
+            <div class="field"><label for="qf-service">What do you need?</label>
+              <select id="qf-service" name="service">
+                <option>Panel upgrade</option><option>EV charger</option><option>Pot lights</option>
+                <option>Troubleshooting</option><option>Emergency call</option><option>Something else</option>
+              </select>
+            </div>
+            <div class="field"><label for="qf-msg">A few details</label><textarea id="qf-msg" name="message" placeholder="What's going on?"></textarea></div>
+            <button class="form-submit" type="submit">Request a quote</button>
+            <div class="form-success" id="qf-success">Thanks! Your email app should be open now, just hit send.</div>
+            <p class="form-note">We'll never share your info. No spam, ever.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-col">
+        <div>© 2026 Absolute Comfort Heating & Air Conditioning. Serving Mississauga and the GTA.</div>
+        <div>905-271-2911 · info@absolutecomfort.ca</div>
+        <div class="footer-socials">
+          <a href="#" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12"/></svg></a>
+          <a href="#" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2c2.7 0 3.1 0 4.1.1 1 .1 1.7.2 2.3.5.6.2 1.1.6 1.6 1.1.5.5.8.9 1.1 1.6.2.6.4 1.3.5 2.3.1 1 .1 1.4.1 4.1s0 3.1-.1 4.1c-.1 1-.2 1.7-.5 2.3-.2.6-.6 1.1-1.1 1.6-.5.5-.9.8-1.6 1.1-.6.2-1.3.4-2.3.5-1 .1-1.4.1-4.1.1s-3.1 0-4.1-.1c-1-.1-1.7-.2-2.3-.5-.6-.2-1.1-.6-1.6-1.1-.5-.5-.8-.9-1.1-1.6-.2-.6-.4-1.3-.5-2.3C2 15.1 2 14.7 2 12s0-3.1.1-4.1c.1-1 .2-1.7.5-2.3.2-.6.6-1.1 1.1-1.6.5-.5.9-.8 1.6-1.1.6-.2 1.3-.4 2.3-.5C8.9 2 9.3 2 12 2zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zm5.2-8.4a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4z"/></svg></a>
+          <a href="#" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.4 20.4h-3.5v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6h.1c.5-.9 1.6-1.9 3.3-1.9 3.6 0 4.2 2.4 4.2 5.4v6.3zM5.3 7.4a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM7.1 20.4H3.6V9h3.5v11.4z"/></svg></a>
+        </div>
+        <div class="footer-credit">© 2026 Absolute Comfort Heating & Air Conditioning. Created with ♥ by <a href="https://thecreativehorse.ca" target="_blank" rel="noopener">The Creative Horse Inc.</a></div>
+      </div>
+    </div>
+  </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/motion@13.1.0/dist/motion.js" crossorigin="anonymous"></script>
+<script>
+  // on-page debug log — only active with ?debug=1 in the URL, invisible otherwise, for diagnosing touch issues on real phones without remote devtools
+  const DEBUG_MODE = /[?&]debug=1/.test(location.search);
+  let dbgPanel = null;
+  function dbg(msg){
+    if (!DEBUG_MODE) return;
+    if (!dbgPanel){
+      dbgPanel = document.createElement('div');
+      dbgPanel.style.cssText = 'position:fixed;left:0;right:0;bottom:0;max-height:45vh;overflow:auto;background:rgba(0,0,0,.92);color:#0f0;font:11px/1.4 monospace;padding:8px;z-index:99999;white-space:pre-wrap;';
+      document.body.appendChild(dbgPanel);
+    }
+    const line = document.createElement('div');
+    line.textContent = new Date().toISOString().slice(11,23) + '  ' + msg;
+    dbgPanel.appendChild(line);
+    dbgPanel.scrollTop = dbgPanel.scrollHeight;
+    while (dbgPanel.children.length > 60) dbgPanel.removeChild(dbgPanel.firstChild);
+  }
+  if (DEBUG_MODE){
+    window.addEventListener('error', (e) => dbg('JS ERROR: ' + e.message + ' @ ' + e.filename + ':' + e.lineno));
+    dbg('debug mode on. touchpoints=' + navigator.maxTouchPoints + ' ua=' + navigator.userAgent.slice(0,60));
+  }
+
+  // Animation layer is optional polish — never let it block core page functionality (sliders, forms, nav)
+  // if Motion.js throws on some device/browser. Wrapped in try/catch as a hard isolation boundary.
+  try {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (typeof Motion === 'undefined' || reduceMotion) {
+      document.documentElement.classList.add('no-motion');
+    } else {
+      const { animate, inView, stagger, hover, press } = Motion;
+      const easeOut = [.22,1,.36,1];
+
+      const groups = [['.services-grid','.service-card'], ['.why-grid','.why-item']];
+      const groupedEls = new Set();
+      groups.forEach(([groupSel, itemSel])=>{
+        document.querySelectorAll(groupSel).forEach(group=>{
+          const items = group.querySelectorAll(itemSel);
+          items.forEach(el=>groupedEls.add(el));
+          inView(group, ()=>{
+            animate(items, {opacity:[0,1], y:[20,0]}, {delay:stagger(.08), duration:.6, easing:easeOut});
+          }, {margin:'0px 0px -10% 0px'});
+        });
+      });
+
+      document.querySelectorAll('.reveal').forEach(el=>{
+        if (groupedEls.has(el) || el.matches('.services-grid, .why-grid')) return;
+        inView(el, ()=>{
+          animate(el, {opacity:[0,1], y:[24,0]}, {duration:.7, easing:easeOut});
+        }, {margin:'0px 0px -10% 0px'});
+      });
+
+      animate(['.hero-badge','.hero h1','.hero p','.hero-actions'],
+        {opacity:[0,1], y:[16,0]}, {delay:stagger(.12), duration:.8, easing:easeOut});
+
+      hover('.service-card', (el)=>{
+        animate(el, {scale:1.012}, {type:'spring', stiffness:300, damping:22});
+        return ()=>animate(el, {scale:1}, {type:'spring', stiffness:300, damping:22});
+      });
+
+      press('.btn-primary, .btn-ghost, .form-submit', (el)=>{
+        animate(el, {scale:.96}, {duration:.1});
+        return ()=>animate(el, {scale:1}, {type:'spring', stiffness:400, damping:17});
+      });
+    }
+  } catch (err) {
+    // Animation library failed — fall back to the no-motion CSS state and keep going.
+    // This is the fix for a real bug: Motion.js was throwing on some devices and, being
+    // uncaught, was halting this entire inline <script> block before it ever reached the
+    // compare-slider / gallery-slider setup code below — which is why those looked "broken."
+    document.documentElement.classList.add('no-motion');
+    dbg('MOTION SETUP FAILED (caught, continuing): ' + (err && err.message));
+    console.error('Motion setup failed:', err);
+  }
+
+  // Each interactive feature below is wrapped in its own try/catch so a failure in one
+  // (e.g. a missing element on a given page variant) can never cascade and silently kill
+  // features listed after it in the script — the exact failure mode that broke the sliders.
+  try {
+  const slider = document.getElementById('compareSlider');
+  const afterWrap = document.getElementById('afterWrap');
+  const handle = document.getElementById('handle');
+  dbg('compareSlider found=' + !!slider + ' afterWrap=' + !!afterWrap + ' handle=' + !!handle);
+  if (slider && afterWrap && handle) {
+    let dragging = false;
+    let pendingX = null;
+    let rafId = null;
+    function applyPos(){
+      rafId = null;
+      if (pendingX === null) return;
+      const r = slider.getBoundingClientRect();
+      const pct = Math.min(100, Math.max(0, ((pendingX - r.left) / r.width) * 100));
+      afterWrap.style.clipPath = `inset(0 0 0 ${pct}%)`;
+      handle.style.left = pct + '%';
+      dbg('compare applyPos pct=' + pct.toFixed(1));
+    }
+    function queuePos(x){
+      pendingX = x;
+      if (rafId === null) rafId = requestAnimationFrame(applyPos);
+    }
+    function startDrag(x){ dragging = true; dbg('compare startDrag x=' + x); queuePos(x); }
+    function moveDrag(x){ if (dragging) queuePos(x); }
+    function endDrag(){ dbg('compare endDrag'); dragging = false; }
+
+    slider.addEventListener('mousedown', (e)=>startDrag(e.clientX));
+    window.addEventListener('mousemove', (e)=>moveDrag(e.clientX));
+    window.addEventListener('mouseup', endDrag);
+
+    slider.addEventListener('touchstart', (e)=>{
+      dbg('compare touchstart, touches=' + (e.touches ? e.touches.length : 'null'));
+      if (!e.touches || !e.touches.length) return;
+      startDrag(e.touches[0].clientX);
+    }, {passive:true});
+    slider.addEventListener('touchmove', (e)=>{
+      if (!dragging || !e.touches || !e.touches.length) { dbg('compare touchmove ignored, dragging=' + dragging); return; }
+      dbg('compare touchmove x=' + e.touches[0].clientX + ' cancelable=' + e.cancelable);
+      if (e.cancelable) e.preventDefault();
+      moveDrag(e.touches[0].clientX);
+    }, {passive:false});
+    slider.addEventListener('touchend', endDrag);
+    slider.addEventListener('touchcancel', endDrag);
+  }
+  } catch (err) { dbg('COMPARE SLIDER SETUP FAILED: ' + (err && err.message)); console.error('Compare slider setup failed:', err); }
+
+  try {
+  const qf = document.getElementById('quoteForm');
+  qf.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const name = qf.name.value.trim();
+    const contact = qf.contact.value.trim();
+    const service = qf.service.value;
+    const message = qf.message.value.trim();
+    const subject = encodeURIComponent(`Quote request: ${service} — ${name}`);
+    const body = encodeURIComponent(`Name: ${name}\nContact: ${contact}\nService: ${service}\n\n${message}`);
+    window.location.href = `mailto:info@absolutecomfort.ca?subject=${subject}&body=${body}`;
+    document.getElementById('qf-success').style.display = 'block';
+  });
+  } catch (err) { dbg('QUOTE FORM SETUP FAILED: ' + (err && err.message)); console.error('Quote form setup failed:', err); }
+
+  // shared flag so a swipe on the slider doesn't also pop the lightbox open
+  let sliderJustSwiped = false;
+
+  try {
+  // gallery lightbox — click the current slide to see it full-size
+  const lightbox = document.getElementById('lightbox');
+  if (lightbox) {
+    const lbImg = lightbox.querySelector('img');
+    document.querySelectorAll('.slide').forEach((fig) => {
+      fig.addEventListener('click', () => {
+        if (sliderJustSwiped) { sliderJustSwiped = false; return; }
+        const img = fig.querySelector('img');
+        if (!img) return;
+        lbImg.src = img.src;
+        lbImg.alt = img.alt || '';
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+      });
+    });
+    const closeLightbox = () => {
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lbImg.src = '';
+    };
+    lightbox.addEventListener('click', closeLightbox);
+    lightbox.querySelector('.lightbox-close').addEventListener('click', (e) => { e.stopPropagation(); closeLightbox(); });
+    lbImg.addEventListener('click', (e) => e.stopPropagation());
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+  }
+  } catch (err) { dbg('LIGHTBOX SETUP FAILED: ' + (err && err.message)); console.error('Lightbox setup failed:', err); }
+
+  try {
+  // gallery slider — auto-advance, arrows, dots, pause on hover
+  const gallerySlider = document.getElementById('gallerySlider');
+  dbg('gallerySlider found=' + !!gallerySlider);
+  if (gallerySlider) {
+    const track = document.getElementById('sliderTrack');
+    const slides = Array.from(track.children);
+    const dotsWrap = document.getElementById('sliderDots');
+    let idx = 0, timer;
+    slides.forEach((_, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', `Go to photo ${i + 1}`);
+      if (i === 0) b.classList.add('active');
+      b.addEventListener('click', () => { go(i); resetTimer(); });
+      dotsWrap.appendChild(b);
+    });
+    const dots = Array.from(dotsWrap.children);
+    function go(i) {
+      idx = (i + slides.length) % slides.length;
+      track.style.transform = `translateX(-${idx * 100}%)`;
+      dots.forEach((d, n) => d.classList.toggle('active', n === idx));
+    }
+    function resetTimer() {
+      clearInterval(timer);
+      timer = setInterval(() => go(idx + 1), 4500);
+    }
+    document.getElementById('sliderPrev').addEventListener('click', () => { go(idx - 1); resetTimer(); });
+    document.getElementById('sliderNext').addEventListener('click', () => { go(idx + 1); resetTimer(); });
+    resetTimer();
+    gallerySlider.addEventListener('mouseenter', () => clearInterval(timer));
+    gallerySlider.addEventListener('mouseleave', resetTimer);
+
+    // swipe left/right to change photo on touch devices — live drag-follow, not just detect-at-end
+    let touchStartX = 0, touchStartY = 0, touchActive = false, dragLocked = null, dragPx = 0, sliderWidthCache = 0;
+    function setLiveOffset(px){
+      const pct = sliderWidthCache ? (px / sliderWidthCache) * 100 : 0;
+      track.style.transform = `translateX(calc(-${idx * 100}% + ${pct}%))`;
+    }
+    gallerySlider.addEventListener('touchstart', (e) => {
+      dbg('gallery touchstart, touches=' + (e.touches ? e.touches.length : 'null') + ' target=' + (e.target && e.target.tagName));
+      if (!e.touches || !e.touches.length) return;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchActive = true;
+      dragLocked = null;
+      dragPx = 0;
+      sliderWidthCache = gallerySlider.getBoundingClientRect().width;
+      clearInterval(timer);
+      track.style.transition = 'none';
+    }, {passive:true});
+    gallerySlider.addEventListener('touchmove', (e) => {
+      if (!touchActive || !e.touches || !e.touches.length) { dbg('gallery touchmove ignored, active=' + touchActive); return; }
+      const dx = e.touches[0].clientX - touchStartX;
+      const dy = e.touches[0].clientY - touchStartY;
+      if (dragLocked === null && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
+        dragLocked = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+        dbg('gallery dragLocked=' + dragLocked + ' dx=' + dx.toFixed(0) + ' dy=' + dy.toFixed(0));
+      }
+      if (dragLocked === 'x') {
+        dbg('gallery touchmove dx=' + dx.toFixed(0) + ' cancelable=' + e.cancelable);
+        if (e.cancelable) e.preventDefault();
+        dragPx = dx;
+        setLiveOffset(dragPx);
+      }
+    }, {passive:false});
+    gallerySlider.addEventListener('touchend', () => {
+      dbg('gallery touchend, active=' + touchActive + ' dragLocked=' + dragLocked + ' dragPx=' + dragPx);
+      if (!touchActive) return;
+      touchActive = false;
+      track.style.transition = '';
+      if (dragLocked === 'x') {
+        sliderJustSwiped = true;
+        if (Math.abs(dragPx) > sliderWidthCache * 0.15) {
+          go(dragPx < 0 ? idx + 1 : idx - 1);
+        } else {
+          go(idx);
+        }
+      }
+      dragLocked = null;
+      dragPx = 0;
+      resetTimer();
+    });
+    gallerySlider.addEventListener('touchcancel', () => {
+      dbg('gallery touchcancel');
+      touchActive = false;
+      track.style.transition = '';
+      go(idx);
+      dragLocked = null;
+      resetTimer();
+    });
+    gallerySlider.addEventListener('touchcancel', () => { touchActive = false; });
+  }
+  } catch (err) { dbg('GALLERY SLIDER SETUP FAILED: ' + (err && err.message)); console.error('Gallery slider setup failed:', err); }
+</script>
+</body>
+</html>
